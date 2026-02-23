@@ -1,5 +1,5 @@
 import React, { act } from 'react';
-import { render, waitFor, screen } from '@testing-library/react';
+import { render, waitFor, screen, cleanup } from '@testing-library/react';
 import { ApolloProvider } from '@apollo/client';
 import AdvertisementRegister from './AdvertisementRegister';
 import { Provider } from 'react-redux';
@@ -82,6 +82,7 @@ describe('Testing Advertisement Register Component', () => {
     mockUseMutation.mockReturnValue([vi.fn()]);
   });
   afterEach(() => {
+    cleanup();
     vi.restoreAllMocks();
   });
   test('AdvertismentRegister component loads correctly in register mode', async () => {

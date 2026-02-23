@@ -1,7 +1,7 @@
 import React from 'react';
 import { describe, expect, vi } from 'vitest';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from 'state/store';
@@ -11,6 +11,7 @@ import { AdvertisementSkeleton } from './AdvertisementSkeleton';
 
 describe('Testing Advertisement Component', () => {
   beforeEach(() => {
+    cleanup();
     vi.restoreAllMocks();
   });
 
