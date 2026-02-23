@@ -454,21 +454,20 @@ const renderEventActionItems = (
 
 describe('EventActionItems', () => {
   beforeEach(async () => {
-    const { default: SortingButton } = await import(
-      'shared-components/SortingButton/SortingButton'
-    );
+    const { default: SortingButton } =
+      await import('shared-components/SortingButton/SortingButton');
     // Define the type locally for the cast
     type SortingButtonMock = { resetFilterCount: () => void };
     (SortingButton as unknown as SortingButtonMock).resetFilterCount?.();
 
     useParamsMock = { orgId: '123' };
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
     vi.restoreAllMocks();
   });
   afterEach(() => {
     setUseParamsMock({ orgId: 'orgId1' });
     cleanup();
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe('Component Rendering', () => {

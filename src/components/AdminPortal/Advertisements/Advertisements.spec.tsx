@@ -85,7 +85,7 @@ vi.mock('components/NotificationToast/NotificationToast', () => ({
 describe('Testing Advertisement Component', () => {
   beforeEach(() => {
     mockUseMutation = vi.fn();
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
     mockUseMutation.mockReturnValue([vi.fn()]);
     Object.defineProperty(window, 'innerHeight', {
       value: 1000,
@@ -103,7 +103,7 @@ describe('Testing Advertisement Component', () => {
     });
   });
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
     vi.restoreAllMocks();
   });
 

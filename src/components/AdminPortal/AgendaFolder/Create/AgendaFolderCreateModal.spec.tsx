@@ -43,7 +43,7 @@ describe('AgendaFolderCreateModal', () => {
     cleanup();
     mockOrgId = 'org-123';
     vi.restoreAllMocks(); // restore spy implementations
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('renders modal when open', () => {

@@ -78,11 +78,10 @@ const translations = {
 describe('Testing Advertisement Register Component', () => {
   beforeEach(() => {
     mockUseMutation = vi.fn();
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
     mockUseMutation.mockReturnValue([vi.fn()]);
   });
   afterEach(() => {
-    vi.clearAllMocks();
     vi.restoreAllMocks();
   });
   test('AdvertismentRegister component loads correctly in register mode', async () => {

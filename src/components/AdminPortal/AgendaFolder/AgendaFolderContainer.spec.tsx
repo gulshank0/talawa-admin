@@ -393,7 +393,6 @@ describe('AgendaFolderContainer', () => {
   afterEach(() => {
     cleanup();
     vi.restoreAllMocks();
-    vi.clearAllMocks();
   });
 
   describe('Initial rendering', () => {

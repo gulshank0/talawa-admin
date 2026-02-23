@@ -20,7 +20,7 @@ import {
 } from './common';
 
 afterEach(() => {
-  vi.clearAllMocks();
+  vi.restoreAllMocks();
 });
 
 describe('common constants and helpers', () => {

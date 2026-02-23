@@ -106,7 +106,6 @@ const t = (key: string): string => key;
 describe('AgendaItemsCreateModal', () => {
   afterEach(() => {
     vi.restoreAllMocks();
-    vi.clearAllMocks();
   });
 
   it('renders modal when open', () => {
