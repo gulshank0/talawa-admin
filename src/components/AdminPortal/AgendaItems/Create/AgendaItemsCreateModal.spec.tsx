@@ -104,7 +104,6 @@ const categories: InterfaceAgendaItemCategoryInfo[] = [
 describe('AgendaItemsCreateModal', () => {
   afterEach(() => {
     vi.restoreAllMocks();
-    vi.clearAllMocks();
   });
 
   it('renders modal when open', () => {

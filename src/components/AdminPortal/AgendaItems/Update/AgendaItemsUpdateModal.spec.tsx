@@ -133,7 +133,7 @@ describe('AgendaItemsUpdateModal', () => {
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('renders modal when open', () => {

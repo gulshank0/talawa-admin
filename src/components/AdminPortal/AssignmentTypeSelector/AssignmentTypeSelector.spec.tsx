@@ -9,7 +9,7 @@ import type { AssignmentType } from 'types/AdminPortal/AssignmentTypeSelector/in
 
 describe('AssignmentTypeSelector', () => {
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   const renderComponent = (

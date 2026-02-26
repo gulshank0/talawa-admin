@@ -11,7 +11,7 @@ import {
 
 describe('constants', () => {
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('AUTH_TOKEN should be an empty string', () => {

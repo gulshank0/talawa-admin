@@ -155,7 +155,7 @@ const renderAgendaFolderUpdateModal = (
 
 describe('AgendaFolderUpdateModal', () => {
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe('Rendering', () => {

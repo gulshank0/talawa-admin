@@ -11,7 +11,7 @@ import { AdvertisementSkeleton } from './AdvertisementSkeleton';
 
 describe('Testing Advertisement Component', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('Testing AdvertisementSkeleton Component', async () => {

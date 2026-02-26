@@ -44,7 +44,7 @@ describe('AgendaItemsPreviewModal', () => {
   };
 
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('renders modal when open', () => {

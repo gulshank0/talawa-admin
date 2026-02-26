@@ -149,7 +149,7 @@ describe('Testing Event Dashboard Screen', () => {
   afterEach(() => {
     // Clean up after each test
     localStorageMock.clear();
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
     cleanup();
   });
 
