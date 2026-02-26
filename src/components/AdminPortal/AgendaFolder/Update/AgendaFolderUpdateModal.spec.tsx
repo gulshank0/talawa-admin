@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { I18nextProvider } from 'react-i18next';
@@ -155,6 +155,7 @@ const renderAgendaFolderUpdateModal = (
 
 describe('AgendaFolderUpdateModal', () => {
   afterEach(() => {
+    cleanup();
     vi.restoreAllMocks();
   });
 
