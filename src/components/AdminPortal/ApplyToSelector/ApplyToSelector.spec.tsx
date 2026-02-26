@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { I18nextProvider } from 'react-i18next';
@@ -9,6 +9,7 @@ import type { ApplyToType } from 'types/AdminPortal/ApplyToSelector/interface';
 
 describe('ApplyToSelector', () => {
   afterEach(() => {
+    cleanup();
     vi.restoreAllMocks();
   });
 
