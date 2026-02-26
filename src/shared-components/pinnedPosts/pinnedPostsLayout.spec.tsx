@@ -137,7 +137,7 @@ const DELETE_POST_MOCK = {
 
 describe('PinnedPostsLayout Component', () => {
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe('Rendering', () => {

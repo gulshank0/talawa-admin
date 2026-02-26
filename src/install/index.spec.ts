@@ -15,7 +15,6 @@ vi.mock('inquirer');
 
 describe('install/index', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
     vi.spyOn(console, 'log').mockImplementation(() => {});
     vi.spyOn(console, 'error').mockImplementation(() => {});
     vi.spyOn(process, 'exit').mockImplementation((() => undefined) as never);

@@ -24,7 +24,6 @@ describe('Windows installers', () => {
   };
 
   beforeEach(() => {
-    vi.clearAllMocks();
     vi.mocked(createSpinner).mockReturnValue(spinnerMock);
   });
 

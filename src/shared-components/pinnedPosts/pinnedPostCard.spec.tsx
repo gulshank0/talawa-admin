@@ -105,7 +105,7 @@ vi.mock('@mui/material', async () => {
 
 describe('PinnedPostCard Component', () => {
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   const mockOnStoryClick = vi.fn();
@@ -139,8 +139,6 @@ describe('PinnedPostCard Component', () => {
   };
 
   beforeEach(() => {
-    vi.clearAllMocks();
-
     // Reset localStorage mock to default values
     mockLocalStorage.mockImplementation((key: string) => {
       if (key === 'role') return 'administrator';

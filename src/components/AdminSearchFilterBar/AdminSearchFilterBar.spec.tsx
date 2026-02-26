@@ -83,7 +83,7 @@ describe('AdminSearchFilterBar', () => {
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
     vi.useRealTimers();
   });
 

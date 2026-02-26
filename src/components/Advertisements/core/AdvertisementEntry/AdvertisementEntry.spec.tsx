@@ -46,7 +46,7 @@ global.URL.createObjectURL = vi.fn(() => 'mocked-url');
 describe('Testing Advertisement Entry Component', () => {
   beforeEach(() => {
     mockUseMutation = vi.fn();
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
     mockUseMutation.mockReturnValue([vi.fn()]);
   });
   afterEach(() => {
