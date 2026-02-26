@@ -9,7 +9,7 @@ import type { ApplyToType } from 'types/AdminPortal/ApplyToSelector/interface';
 
 describe('ApplyToSelector', () => {
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   const renderComponent = (

@@ -472,13 +472,12 @@ describe('EventActionItems', () => {
     (SortingButton as unknown as SortingButtonMock).resetFilterCount?.();
 
     useParamsMock = { orgId: '123' };
-    vi.clearAllMocks();
     vi.restoreAllMocks();
   });
   afterEach(() => {
     setUseParamsMock({ orgId: 'orgId1' });
     cleanup();
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe('Component Rendering', () => {
