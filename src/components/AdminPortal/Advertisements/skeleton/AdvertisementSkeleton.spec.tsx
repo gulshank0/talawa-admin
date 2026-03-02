@@ -10,7 +10,7 @@ import { I18nextProvider } from 'react-i18next';
 import { AdvertisementSkeleton } from './AdvertisementSkeleton';
 
 describe('Testing Advertisement Component', () => {
-  beforeEach(() => {
+  afterEach(() => {
     cleanup();
     vi.restoreAllMocks();
   });
