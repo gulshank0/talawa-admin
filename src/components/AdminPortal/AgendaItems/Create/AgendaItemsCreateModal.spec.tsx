@@ -1,6 +1,6 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/react-testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router';
 import * as ReactRouter from 'react-router';
@@ -103,6 +103,7 @@ const categories: InterfaceAgendaItemCategoryInfo[] = [
 
 describe('AgendaItemsCreateModal', () => {
   afterEach(() => {
+    cleanup();
     vi.restoreAllMocks();
   });
 
