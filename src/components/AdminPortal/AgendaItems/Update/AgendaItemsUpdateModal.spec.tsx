@@ -19,9 +19,6 @@ import type {
 } from 'types/AdminPortal/Agenda/interface';
 
 dayjs.extend(utc);
-
-const FIXED_UTC_BASELINE = new Date(Date.UTC(2023, 0, 1));
-
 const toastMocks = vi.hoisted(() => ({
   success: vi.fn(),
   error: vi.fn(),
@@ -137,7 +134,7 @@ describe('AgendaItemsUpdateModal', () => {
 
   afterEach(() => {
     cleanup();
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('renders modal when open', () => {
@@ -225,9 +222,7 @@ describe('AgendaItemsUpdateModal', () => {
                     url: [{ id: '1', url: 'https://example.com' }],
                     folder: { id: 'folder-1', name: 'Folder 1' },
                     updater: { id: 'user-1', name: 'Admin' },
-                    updatedAt: dayjs(FIXED_UTC_BASELINE)
-                      .add(30, 'days')
-                      .toISOString(),
+                    updatedAt: dayjs().add(30, 'days').toISOString(),
                   },
                 },
               },
@@ -1027,9 +1022,7 @@ describe('AgendaItemsUpdateModal', () => {
                     url: [],
                     folder: null,
                     updater: { id: 'user-1', name: 'Admin' },
-                    updatedAt: dayjs(FIXED_UTC_BASELINE)
-                      .add(30, 'days')
-                      .toISOString(),
+                    updatedAt: dayjs().add(30, 'days').toISOString(),
                   },
                 },
               },
@@ -1103,9 +1096,7 @@ describe('AgendaItemsUpdateModal', () => {
                     url: [],
                     folder: null,
                     updater: { id: 'user-1', name: 'Admin' },
-                    updatedAt: dayjs(FIXED_UTC_BASELINE)
-                      .add(30, 'days')
-                      .toISOString(),
+                    updatedAt: dayjs().add(30, 'days').toISOString(),
                   },
                 },
               },
@@ -1175,9 +1166,7 @@ describe('AgendaItemsUpdateModal', () => {
                     url: [],
                     folder: null,
                     updater: { id: 'user-1', name: 'Admin' },
-                    updatedAt: dayjs(FIXED_UTC_BASELINE)
-                      .add(30, 'days')
-                      .toISOString(),
+                    updatedAt: dayjs().add(30, 'days').toISOString(),
                   },
                 },
               },
@@ -1468,9 +1457,7 @@ describe('AgendaItemsUpdateModal', () => {
                     url: [],
                     folder: null,
                     updater: { id: 'user-1', name: 'Admin' },
-                    updatedAt: dayjs(FIXED_UTC_BASELINE)
-                      .add(30, 'days')
-                      .toISOString(),
+                    updatedAt: dayjs().add(30, 'days').toISOString(),
                   },
                 },
               },
@@ -1516,38 +1503,34 @@ describe('AgendaItemsUpdateModal', () => {
   });
 
   it('shows error when organization id is missing during file upload', async () => {
-    const spy = vi.spyOn(ReactRouter, 'useParams').mockReturnValue({});
+    vi.spyOn(ReactRouter, 'useParams').mockReturnValue({});
 
-    try {
-      const user = userEvent.setup();
+    const user = userEvent.setup();
 
-      render(
-        <MockedProvider>
-          <BrowserRouter>
-            <AgendaItemsUpdateModal {...defaultProps} />
-          </BrowserRouter>
-        </MockedProvider>,
-      );
+    render(
+      <MockedProvider>
+        <BrowserRouter>
+          <AgendaItemsUpdateModal {...defaultProps} />
+        </BrowserRouter>
+      </MockedProvider>,
+    );
 
-      const file = new File(['content'], 'test.png', { type: 'image/png' });
-      const fileInput = document.querySelector(
-        'input[type="file"]',
-      ) as HTMLInputElement;
+    const file = new File(['content'], 'test.png', { type: 'image/png' });
+    const fileInput = document.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
 
-      if (fileInput) {
-        await user.upload(fileInput, file);
-      }
-
-      await waitFor(() => {
-        expect(NotificationToast.error).toHaveBeenCalledWith(
-          'organizationRequired',
-        );
-      });
-
-      expect(uploadFileToMinioMock).not.toHaveBeenCalled();
-    } finally {
-      spy.mockRestore();
+    if (fileInput) {
+      await user.upload(fileInput, file);
     }
+
+    await waitFor(() => {
+      expect(NotificationToast.error).toHaveBeenCalledWith(
+        'organizationRequired',
+      );
+    });
+
+    expect(uploadFileToMinioMock).not.toHaveBeenCalled();
   });
 
   it('validates URL with regex pattern correctly', async () => {
@@ -1604,208 +1587,184 @@ describe('AgendaItemsUpdateModal', () => {
   });
 
   it('resets file input value after successful upload', async () => {
-    const spy = vi
-      .spyOn(ReactRouter, 'useParams')
-      .mockReturnValue({ orgId: 'org-123' });
+    vi.spyOn(ReactRouter, 'useParams').mockReturnValue({ orgId: 'org-123' });
 
-    try {
-      uploadFileToMinioMock.mockResolvedValue({
-        objectName: 'obj-new',
-        fileHash: 'hash-new',
-      });
-      getFileFromMinioMock.mockResolvedValue('https://example.com/new.png');
+    uploadFileToMinioMock.mockResolvedValue({
+      objectName: 'obj-new',
+      fileHash: 'hash-new',
+    });
+    getFileFromMinioMock.mockResolvedValue('https://example.com/new.png');
 
-      const user = userEvent.setup();
-      const setItemFormStateMock = vi.fn((callback) => {
-        if (typeof callback === 'function') {
-          callback(mockFormState);
-        }
-      });
-
-      render(
-        <MockedProvider>
-          <BrowserRouter>
-            <AgendaItemsUpdateModal
-              {...defaultProps}
-              setItemFormState={setItemFormStateMock}
-            />
-          </BrowserRouter>
-        </MockedProvider>,
-      );
-
-      const file = new File(['content'], 'test.png', { type: 'image/png' });
-      const fileInput = document.querySelector(
-        'input[type="file"]',
-      ) as HTMLInputElement;
-
-      if (fileInput) {
-        await user.upload(fileInput, file);
-
-        await waitFor(() => {
-          expect(uploadFileToMinioMock).toHaveBeenCalled();
-        });
-
-        // File input should be reset
-        expect(fileInput.value).toBe('');
+    const user = userEvent.setup();
+    const setItemFormStateMock = vi.fn((callback) => {
+      if (typeof callback === 'function') {
+        callback(mockFormState);
       }
-    } finally {
-      spy.mockRestore();
+    });
+
+    render(
+      <MockedProvider>
+        <BrowserRouter>
+          <AgendaItemsUpdateModal
+            {...defaultProps}
+            setItemFormState={setItemFormStateMock}
+          />
+        </BrowserRouter>
+      </MockedProvider>,
+    );
+
+    const file = new File(['content'], 'test.png', { type: 'image/png' });
+    const fileInput = document.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
+
+    if (fileInput) {
+      await user.upload(fileInput, file);
+
+      await waitFor(() => {
+        expect(uploadFileToMinioMock).toHaveBeenCalled();
+      });
+
+      // File input should be reset
+      expect(fileInput.value).toBe('');
     }
   });
 
   it('resets file input value after upload error', async () => {
-    const spy = vi
-      .spyOn(ReactRouter, 'useParams')
-      .mockReturnValue({ orgId: 'org-123' });
+    vi.spyOn(ReactRouter, 'useParams').mockReturnValue({ orgId: 'org-123' });
 
-    try {
-      uploadFileToMinioMock.mockRejectedValueOnce(new Error('Upload failed'));
+    uploadFileToMinioMock.mockRejectedValueOnce(new Error('Upload failed'));
 
-      const user = userEvent.setup();
+    const user = userEvent.setup();
 
-      render(
-        <MockedProvider>
-          <BrowserRouter>
-            <AgendaItemsUpdateModal {...defaultProps} />
-          </BrowserRouter>
-        </MockedProvider>,
-      );
+    render(
+      <MockedProvider>
+        <BrowserRouter>
+          <AgendaItemsUpdateModal {...defaultProps} />
+        </BrowserRouter>
+      </MockedProvider>,
+    );
 
-      const file = new File(['content'], 'test.png', { type: 'image/png' });
-      const fileInput = document.querySelector(
-        'input[type="file"]',
-      ) as HTMLInputElement;
+    const file = new File(['content'], 'test.png', { type: 'image/png' });
+    const fileInput = document.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
 
-      if (fileInput) {
-        await user.upload(fileInput, file);
+    if (fileInput) {
+      await user.upload(fileInput, file);
 
-        await waitFor(() => {
-          expect(NotificationToast.error).toHaveBeenCalledWith(
-            'fileUploadFailed',
-          );
-        });
+      await waitFor(() => {
+        expect(NotificationToast.error).toHaveBeenCalledWith(
+          'fileUploadFailed',
+        );
+      });
 
-        // File input should still be reset even on error
-        expect(fileInput.value).toBe('');
-      }
-    } finally {
-      spy.mockRestore();
+      // File input should still be reset even on error
+      expect(fileInput.value).toBe('');
     }
   });
 
   it('processes multiple files with mixed valid and invalid types', async () => {
-    const spy = vi
-      .spyOn(ReactRouter, 'useParams')
-      .mockReturnValue({ orgId: 'org-123' });
+    vi.spyOn(ReactRouter, 'useParams').mockReturnValue({ orgId: 'org-123' });
 
-    try {
-      uploadFileToMinioMock.mockResolvedValue({
-        objectName: 'obj-valid',
-        fileHash: 'hash-valid',
-      });
-      getFileFromMinioMock.mockResolvedValue('https://example.com/valid.png');
+    uploadFileToMinioMock.mockResolvedValue({
+      objectName: 'obj-valid',
+      fileHash: 'hash-valid',
+    });
+    getFileFromMinioMock.mockResolvedValue('https://example.com/valid.png');
 
-      const user = userEvent.setup();
-      const setItemFormStateMock = vi.fn((callback) => {
-        if (typeof callback === 'function') {
-          callback(mockFormState);
-        }
-      });
-
-      render(
-        <MockedProvider>
-          <BrowserRouter>
-            <AgendaItemsUpdateModal
-              {...defaultProps}
-              setItemFormState={setItemFormStateMock}
-            />
-          </BrowserRouter>
-        </MockedProvider>,
-      );
-
-      const files = [
-        new File(['bad'], 'bad.svg', { type: 'image/svg+xml' }),
-        new File(['good'], 'good.png', { type: 'image/png' }),
-        new File(['x'.repeat(11 * 1024 * 1024)], 'large.jpg', {
-          type: 'image/jpeg',
-        }),
-      ];
-
-      const fileInput = document.querySelector(
-        'input[type="file"]',
-      ) as HTMLInputElement;
-
-      if (fileInput) {
-        await user.upload(fileInput, files);
+    const user = userEvent.setup();
+    const setItemFormStateMock = vi.fn((callback) => {
+      if (typeof callback === 'function') {
+        callback(mockFormState);
       }
+    });
 
-      await waitFor(() => {
-        // Should have two errors: invalid type and size exceeded
-        expect(NotificationToast.error).toHaveBeenCalledWith('invalidFileType');
-        expect(NotificationToast.error).toHaveBeenCalledWith(
-          'fileSizeExceedsLimit',
-        );
-        // Only one valid file should be uploaded
-        expect(uploadFileToMinioMock).toHaveBeenCalledTimes(1);
-        expect(setItemFormStateMock).toHaveBeenCalled();
-      });
-    } finally {
-      spy.mockRestore();
+    render(
+      <MockedProvider>
+        <BrowserRouter>
+          <AgendaItemsUpdateModal
+            {...defaultProps}
+            setItemFormState={setItemFormStateMock}
+          />
+        </BrowserRouter>
+      </MockedProvider>,
+    );
+
+    const files = [
+      new File(['bad'], 'bad.svg', { type: 'image/svg+xml' }),
+      new File(['good'], 'good.png', { type: 'image/png' }),
+      new File(['x'.repeat(11 * 1024 * 1024)], 'large.jpg', {
+        type: 'image/jpeg',
+      }),
+    ];
+
+    const fileInput = document.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
+
+    if (fileInput) {
+      await user.upload(fileInput, files);
     }
+
+    await waitFor(() => {
+      // Should have two errors: invalid type and size exceeded
+      expect(NotificationToast.error).toHaveBeenCalledWith('invalidFileType');
+      expect(NotificationToast.error).toHaveBeenCalledWith(
+        'fileSizeExceedsLimit',
+      );
+      // Only one valid file should be uploaded
+      expect(uploadFileToMinioMock).toHaveBeenCalledTimes(1);
+      expect(setItemFormStateMock).toHaveBeenCalled();
+    });
   });
 
   it('handles concurrent file uploads correctly', async () => {
-    const spy = vi
-      .spyOn(ReactRouter, 'useParams')
-      .mockReturnValue({ orgId: 'org-123' });
+    vi.spyOn(ReactRouter, 'useParams').mockReturnValue({ orgId: 'org-123' });
 
-    try {
-      uploadFileToMinioMock
-        .mockResolvedValueOnce({ objectName: 'obj-1', fileHash: 'hash-1' })
-        .mockResolvedValueOnce({ objectName: 'obj-2', fileHash: 'hash-2' });
+    uploadFileToMinioMock
+      .mockResolvedValueOnce({ objectName: 'obj-1', fileHash: 'hash-1' })
+      .mockResolvedValueOnce({ objectName: 'obj-2', fileHash: 'hash-2' });
 
-      getFileFromMinioMock
-        .mockResolvedValueOnce('https://example.com/file1.png')
-        .mockResolvedValueOnce('https://example.com/file2.png');
+    getFileFromMinioMock
+      .mockResolvedValueOnce('https://example.com/file1.png')
+      .mockResolvedValueOnce('https://example.com/file2.png');
 
-      const user = userEvent.setup();
-      const setItemFormStateMock = vi.fn((callback) => {
-        if (typeof callback === 'function') {
-          callback(mockFormState);
-        }
-      });
-
-      render(
-        <MockedProvider>
-          <BrowserRouter>
-            <AgendaItemsUpdateModal
-              {...defaultProps}
-              setItemFormState={setItemFormStateMock}
-            />
-          </BrowserRouter>
-        </MockedProvider>,
-      );
-
-      const files = [
-        new File(['1'], 'file1.png', { type: 'image/png' }),
-        new File(['2'], 'file2.png', { type: 'image/png' }),
-      ];
-
-      const fileInput = document.querySelector(
-        'input[type="file"]',
-      ) as HTMLInputElement;
-
-      if (fileInput) {
-        await user.upload(fileInput, files);
+    const user = userEvent.setup();
+    const setItemFormStateMock = vi.fn((callback) => {
+      if (typeof callback === 'function') {
+        callback(mockFormState);
       }
+    });
 
-      await waitFor(() => {
-        expect(uploadFileToMinioMock).toHaveBeenCalledTimes(2);
-        expect(getFileFromMinioMock).toHaveBeenCalledTimes(2);
-        expect(setItemFormStateMock).toHaveBeenCalled();
-      });
-    } finally {
-      spy.mockRestore();
+    render(
+      <MockedProvider>
+        <BrowserRouter>
+          <AgendaItemsUpdateModal
+            {...defaultProps}
+            setItemFormState={setItemFormStateMock}
+          />
+        </BrowserRouter>
+      </MockedProvider>,
+    );
+
+    const files = [
+      new File(['1'], 'file1.png', { type: 'image/png' }),
+      new File(['2'], 'file2.png', { type: 'image/png' }),
+    ];
+
+    const fileInput = document.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
+
+    if (fileInput) {
+      await user.upload(fileInput, files);
     }
+
+    await waitFor(() => {
+      expect(uploadFileToMinioMock).toHaveBeenCalledTimes(2);
+      expect(getFileFromMinioMock).toHaveBeenCalledTimes(2);
+      expect(setItemFormStateMock).toHaveBeenCalled();
+    });
   });
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { EVENT_DETAILS } from 'GraphQl/Queries/Queries';
 import type { RenderResult } from '@testing-library/react';
-import { render, waitFor, screen, cleanup } from '@testing-library/react';
+import { render, act, waitFor, screen, cleanup } from '@testing-library/react';
 import EventDashboard from './EventDashboard';
 import { BrowserRouter } from 'react-router';
 import { MockedProvider } from '@apollo/react-testing';
@@ -81,6 +81,14 @@ const defaultOptions: DefaultOptions = {
   },
 };
 
+async function wait(ms = 500): Promise<void> {
+  await act(() => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  });
+}
+
 const mockID = 'event123';
 let user: ReturnType<typeof userEvent.setup>;
 vi.mock('react-router', async () => ({
@@ -136,22 +144,6 @@ describe('Testing Event Dashboard Screen', () => {
     user = userEvent.setup();
     // Clear localStorage before each test
     localStorageMock.clear();
-    // Re-apply hoisted mock implementation (vi.restoreAllMocks in afterEach resets it)
-    mockEventListCardModals.mockImplementation(
-      ({ eventModalIsOpen, hideViewModal }) => {
-        return eventModalIsOpen ? (
-          <div data-testid="event-list-card-modals">
-            <button
-              type="button"
-              data-testid="modal-close-btn"
-              onClick={hideViewModal}
-            >
-              Close
-            </button>
-          </div>
-        ) : null;
-      },
-    );
   });
 
   afterEach(() => {
@@ -209,20 +201,16 @@ describe('Testing Event Dashboard Screen', () => {
     expect(getByTestId('spinner')).toBeInTheDocument();
     expect(queryByTestId('event-details')).not.toBeInTheDocument();
 
-    await waitFor(() => {
-      expect(queryByTestId('spinner')).not.toBeInTheDocument();
-    });
+    await wait();
 
+    expect(queryByTestId('spinner')).not.toBeInTheDocument();
     expect(getByTestId('event-details')).toBeInTheDocument();
     expect(getByTestId('event-name')).toBeInTheDocument();
   });
 
   it('Should display "Event not found" when event data is null', async () => {
     const { getByTestId, queryByTestId } = renderEventDashboard(mockNoEvent);
-
-    await waitFor(() => {
-      expect(getByTestId('no-event')).toBeInTheDocument();
-    });
+    await wait();
 
     expect(getByTestId('no-event')).toHaveTextContent(
       i18nForTest.t('eventListCard.noEvent'),
@@ -233,10 +221,7 @@ describe('Testing Event Dashboard Screen', () => {
   it('Should display "Event not found" when data object is missing', async () => {
     const { getByTestId, queryByTestId } =
       renderEventDashboard(mockMissingData);
-
-    await waitFor(() => {
-      expect(getByTestId('no-event')).toBeInTheDocument();
-    });
+    await wait();
 
     expect(getByTestId('no-event')).toHaveTextContent(
       i18nForTest.t('eventListCard.noEvent'),
@@ -246,11 +231,9 @@ describe('Testing Event Dashboard Screen', () => {
 
   it('Should handle missing location gracefully', async () => {
     const { getByTestId } = renderEventDashboard(mockNoLocation);
+    await wait();
 
-    await waitFor(() => {
-      expect(getByTestId('event-location')).toHaveTextContent('N/A');
-    });
-
+    expect(getByTestId('event-location')).toHaveTextContent('N/A');
     expect(await screen.findByTestId('event-name')).toHaveTextContent(
       'Test Event',
     );
@@ -258,18 +241,16 @@ describe('Testing Event Dashboard Screen', () => {
 
   it('Should handle empty description gracefully', async () => {
     const { getByTestId } = renderEventDashboard(mockNoLocation);
-
-    await waitFor(() => {
-      expect(getByTestId('event-description')).toBeInTheDocument();
-    });
+    await wait();
 
     expect(getByTestId('event-description')).toHaveTextContent('');
   });
 
   it('Should open and close event modal when edit button is clicked', async () => {
     const { getByTestId } = renderEventDashboard(mockWithTime);
+    await wait();
 
-    const editButton = await screen.findByTestId('edit-event-button');
+    const editButton = getByTestId('edit-event-button');
 
     // Click to open modal
     await user.click(editButton);
@@ -295,45 +276,38 @@ describe('Testing Event Dashboard Screen', () => {
   it('Should use userId from localStorage when available', async () => {
     localStorageMock.setItem('userId', 'test-user-123');
     const { getByTestId } = renderEventDashboard(mockWithTime);
+    await wait();
 
-    await waitFor(() => {
-      expect(getByTestId('event-details')).toBeInTheDocument();
-    });
+    expect(getByTestId('event-details')).toBeInTheDocument();
   });
 
   it('Should fallback to id from localStorage when userId is not available', async () => {
     localStorageMock.setItem('id', 'test-id-456');
     const { getByTestId } = renderEventDashboard(mockWithTime);
+    await wait();
 
-    await waitFor(() => {
-      expect(getByTestId('event-details')).toBeInTheDocument();
-    });
+    expect(getByTestId('event-details')).toBeInTheDocument();
   });
 
   it('Should set userRole as ADMINISTRATOR when role is administrator', async () => {
     localStorageMock.setItem('role', 'administrator');
     const { getByTestId } = renderEventDashboard(mockWithTime);
+    await wait();
 
-    await waitFor(() => {
-      expect(getByTestId('event-details')).toBeInTheDocument();
-    });
+    expect(getByTestId('event-details')).toBeInTheDocument();
   });
 
   it('Should set userRole as REGULAR when role is not administrator', async () => {
     localStorageMock.setItem('role', 'user');
     const { getByTestId } = renderEventDashboard(mockWithTime);
+    await wait();
 
-    await waitFor(() => {
-      expect(getByTestId('event-details')).toBeInTheDocument();
-    });
+    expect(getByTestId('event-details')).toBeInTheDocument();
   });
 
   it('Should display all statistics cards with N/A values', async () => {
     const { getByTestId } = renderEventDashboard(mockWithTime);
-
-    await waitFor(() => {
-      expect(getByTestId('registrations-count')).toBeInTheDocument();
-    });
+    await wait();
 
     expect(getByTestId('registrations-count')).toHaveTextContent('N/A');
     expect(getByTestId('attendees-count')).toHaveTextContent('N/A');
@@ -342,28 +316,23 @@ describe('Testing Event Dashboard Screen', () => {
 
   it('Should display event registrants as N/A', async () => {
     const { getByTestId } = renderEventDashboard(mockWithTime);
-
-    await waitFor(() => {
-      expect(getByTestId('event-registrants')).toBeInTheDocument();
-    });
+    await wait();
 
     expect(getByTestId('event-registrants')).toHaveTextContent('N/A');
   });
 
   it('Should display event-stats section', async () => {
     const { getByTestId } = renderEventDashboard(mockWithTime);
+    await wait();
 
-    await waitFor(() => {
-      expect(getByTestId('event-stats')).toBeInTheDocument();
-    });
+    expect(getByTestId('event-stats')).toBeInTheDocument();
   });
 
   it('Should render event-dashboard container', async () => {
     const { getByTestId } = renderEventDashboard(mockWithTime);
+    await wait();
 
-    await waitFor(() => {
-      expect(getByTestId('event-dashboard')).toBeInTheDocument();
-    });
+    expect(getByTestId('event-dashboard')).toBeInTheDocument();
   });
 
   it('Should format time correctly for midnight (00:00)', async () => {
@@ -406,11 +375,9 @@ describe('Testing Event Dashboard Screen', () => {
     );
 
     const { getByTestId } = renderEventDashboard(mockMidnight);
+    await wait();
 
-    await waitFor(() => {
-      expect(getByTestId('start-time')).toHaveTextContent('00:00');
-    });
-
+    expect(getByTestId('start-time')).toHaveTextContent('00:00');
     expect(getByTestId('end-time')).toHaveTextContent('00:00');
   });
 
@@ -456,14 +423,12 @@ describe('Testing Event Dashboard Screen', () => {
     );
 
     const { getByTestId } = renderEventDashboard(mockAllDay);
-
-    await waitFor(() => {
-      expect(getByTestId('event-details')).toBeInTheDocument();
-    });
+    await wait();
 
     // For allDay events, time fields should be empty
     expect(getByTestId('start-time')).toHaveTextContent('');
     expect(getByTestId('end-time')).toHaveTextContent('');
+    expect(getByTestId('event-details')).toBeInTheDocument();
   });
 
   describe('LoadingState Behavior', () => {
@@ -501,11 +466,9 @@ describe('Testing Event Dashboard Screen', () => {
     it('should hide spinner and render event details after LoadingState completes', async () => {
       const mockLink = new StaticMockLink(MOCKS_WITH_TIME);
       const { getByTestId, queryByTestId } = renderEventDashboard(mockLink);
+      await wait();
 
-      await waitFor(() => {
-        expect(queryByTestId('spinner')).not.toBeInTheDocument();
-      });
-
+      expect(queryByTestId('spinner')).not.toBeInTheDocument();
       expect(getByTestId('event-details')).toBeInTheDocument();
     });
   });
@@ -515,11 +478,9 @@ describe('Testing Event Dashboard Screen', () => {
       true,
     );
     const { getByTestId } = renderEventDashboard(mockUndefinedInviteOnly);
+    await wait();
 
-    await waitFor(() => {
-      expect(getByTestId('event-details')).toBeInTheDocument();
-    });
-
+    expect(getByTestId('event-details')).toBeInTheDocument();
     expect(mockEventListCardModals).toHaveBeenCalled();
     const props = mockEventListCardModals.mock.lastCall?.[0];
     expect(props).toEqual(
@@ -534,10 +495,11 @@ describe('Testing Event Dashboard Screen', () => {
   it('Should handle empty date strings by defaulting to 08:00', async () => {
     const mockEmptyDates = new StaticMockLink(MOCKS_EMPTY_DATE_STRINGS, true);
     const { getByTestId } = renderEventDashboard(mockEmptyDates);
+    await wait();
 
-    await waitFor(() => {
-      expect(getByTestId('event-details')).toBeInTheDocument();
-    });
+    // Covers formatTimeFromDateTime fallback to '08:00' when startAt/endAt are empty strings
+    // (exercised via eventListCardProps.startTime/endTime construction)
+    expect(getByTestId('event-details')).toBeInTheDocument();
 
     // Assert the fallback time was passed to the modal component
     expect(mockEventListCardModals).toHaveBeenCalled();

@@ -107,9 +107,6 @@ describe('AgendaFolderCreateModal', () => {
       </MockedProvider>,
     );
 
-    // Wait for CreateModal auto-focus setTimeout(100ms) to settle
-    await new Promise((resolve) => setTimeout(resolve, 150));
-
     await user.type(screen.getByLabelText(/folderName/i), 'Folder A');
     await user.type(screen.getByLabelText(/description/i), 'Desc A');
     await user.click(screen.getByTestId('modal-submit-btn'));
@@ -178,9 +175,6 @@ describe('AgendaFolderCreateModal', () => {
       </MockedProvider>,
     );
 
-    // Wait for CreateModal auto-focus setTimeout(100ms) to settle
-    await new Promise((resolve) => setTimeout(resolve, 150));
-
     await user.type(screen.getByLabelText(/folderName/i), 'Folder B');
     await user.type(screen.getByLabelText(/description/i), 'Desc B');
     await user.click(screen.getByTestId('modal-submit-btn'));
@@ -229,9 +223,6 @@ describe('AgendaFolderCreateModal', () => {
         </BrowserRouter>
       </MockedProvider>,
     );
-
-    // Wait for CreateModal auto-focus setTimeout(100ms) to settle
-    await new Promise((resolve) => setTimeout(resolve, 150));
 
     await user.type(screen.getByLabelText(/folderName/i), 'Bad Folder');
     await user.type(screen.getByLabelText(/description/i), 'Bad Desc');
@@ -292,9 +283,6 @@ describe('AgendaFolderCreateModal', () => {
         </BrowserRouter>
       </MockedProvider>,
     );
-
-    // Wait for CreateModal auto-focus setTimeout(100ms) to settle
-    await new Promise((resolve) => setTimeout(resolve, 150));
 
     await user.type(screen.getByLabelText(/folderName/i), 'Folder U');
     await user.type(screen.getByLabelText(/description/i), 'Desc U');
@@ -403,9 +391,6 @@ describe('AgendaFolderCreateModal', () => {
       </MockedProvider>,
     );
 
-    // Wait for CreateModal auto-focus setTimeout(100ms) to settle
-    await new Promise((resolve) => setTimeout(resolve, 150));
-
     await user.type(screen.getByLabelText(/folderName/i), 'Mixed Sequence');
     await user.type(screen.getByLabelText(/description/i), 'Mixed Desc');
     await user.click(screen.getByTestId('modal-submit-btn'));
@@ -466,9 +451,6 @@ describe('AgendaFolderCreateModal', () => {
       </MockedProvider>,
     );
 
-    // Wait for CreateModal auto-focus setTimeout(100ms) to settle
-    await new Promise((resolve) => setTimeout(resolve, 150));
-
     await user.type(screen.getByLabelText(/folderName/i), 'Form State Test');
     await user.type(
       screen.getByLabelText(/description/i),
@@ -524,9 +506,6 @@ describe('AgendaFolderCreateModal', () => {
         </BrowserRouter>
       </MockedProvider>,
     );
-
-    // Wait for CreateModal auto-focus setTimeout(100ms) to settle
-    await new Promise((resolve) => setTimeout(resolve, 150));
 
     const nameInput = screen.getByLabelText(/folderName/i);
     const descInput = screen.getByLabelText(/description/i);
@@ -607,9 +586,6 @@ describe('AgendaFolderCreateModal', () => {
         </BrowserRouter>
       </MockedProvider>,
     );
-
-    // Wait for CreateModal auto-focus setTimeout(100ms) to settle
-    await new Promise((resolve) => setTimeout(resolve, 150));
 
     await user.type(screen.getByLabelText(/folderName/i), 'Weird Error');
     await user.type(screen.getByLabelText(/description/i), 'Desc');

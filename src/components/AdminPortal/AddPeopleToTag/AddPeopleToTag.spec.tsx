@@ -165,13 +165,8 @@ describe('Organisation Tags Page', () => {
   });
 
   afterEach(() => {
+    vi.restoreAllMocks();
     cleanup();
-    toastMocks.success.mockClear();
-    toastMocks.error.mockClear();
-    toastMocks.warning.mockClear();
-    toastMocks.info.mockClear();
-    toastMocks.dismiss.mockClear();
-    vi.clearAllMocks();
   });
 
   it('Component loads correctly', async () => {
