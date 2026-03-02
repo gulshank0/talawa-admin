@@ -366,7 +366,6 @@ const renderAgendaDragAndDrop = (
 
 describe('AgendaDragAndDrop', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
     vi.restoreAllMocks();
     capturedOnDragEnd = null;
   });
