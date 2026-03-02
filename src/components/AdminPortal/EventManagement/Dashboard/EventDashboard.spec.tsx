@@ -150,6 +150,23 @@ describe('Testing Event Dashboard Screen', () => {
     // Clean up after each test
     localStorageMock.clear();
     vi.restoreAllMocks();
+    // Re-apply the hoisted mock implementation so vi.restoreAllMocks() above
+    // doesn't leave mockEventListCardModals with an empty implementation.
+    mockEventListCardModals.mockImplementation(
+      ({ eventModalIsOpen, hideViewModal }) => {
+        return eventModalIsOpen ? (
+          <div data-testid="event-list-card-modals">
+            <button
+              type="button"
+              data-testid="modal-close-btn"
+              onClick={hideViewModal}
+            >
+              Close
+            </button>
+          </div>
+        ) : null;
+      },
+    );
     cleanup();
   });
 

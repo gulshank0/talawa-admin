@@ -2,7 +2,7 @@ import React from 'react';
 import { describe, test, expect, vi, it } from 'vitest';
 import { ApolloProvider } from '@apollo/client';
 import { MockedProvider } from '@apollo/client/testing';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
@@ -103,6 +103,7 @@ describe('Testing Advertisement Component', () => {
     });
   });
   afterEach(() => {
+    cleanup();
     vi.restoreAllMocks();
   });
 
