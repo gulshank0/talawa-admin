@@ -29,6 +29,7 @@ const SortingButton: React.FC<InterfaceSortingButtonProps> = ({
   icon,
   containerClassName,
   toggleClassName,
+  disabled,
 }) => {
   // Determine the icon based on the type
   const IconComponent = type === 'filter' ? FilterAltOutlined : SortIcon;
@@ -54,6 +55,7 @@ const SortingButton: React.FC<InterfaceSortingButtonProps> = ({
       variant="outline-secondary"
       containerClassName={containerClassName}
       toggleClassName={toggleClassName}
+      disabled={disabled}
       icon={
         icon ? (
           <img

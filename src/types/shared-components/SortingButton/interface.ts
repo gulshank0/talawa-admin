@@ -38,4 +38,6 @@ export interface InterfaceSortingButtonProps {
   containerClassName?: string;
   /** Optional extra class for the toggle button (e.g. from parent CSS module) */
   toggleClassName?: string;
+  /** Whether the dropdown button is disabled */
+  disabled?: boolean;
 }

@@ -87,6 +87,20 @@ The prefix for data-testid attributes for testing
 
 ***
 
+### disabled?
+
+> `optional` **disabled**: `boolean`
+
+Defined in: [src/types/shared-components/SortingButton/interface.ts:42](https://github.com/PalisadoesFoundation/talawa-admin/blob/main/src/types/shared-components/SortingButton/interface.ts#L42)
+
+Whether the dropdown button is disabled
+
+#### Inherited from
+
+[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`disabled`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#disabled)
+
+***
+
 ### dropdownTestId?
 
 > `optional` **dropdownTestId**: `string`
