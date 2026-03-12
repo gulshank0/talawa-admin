@@ -35,6 +35,7 @@ vi.mock('shared-components/DropDownButton/DropDownButton', () => ({
       dataTestIdPrefix,
       containerClassName,
       toggleClassName,
+      disabled,
     } = props;
 
     return (
@@ -48,6 +49,7 @@ vi.mock('shared-components/DropDownButton/DropDownButton', () => ({
           data-testid={`${dataTestIdPrefix}-toggle`}
           aria-label={ariaLabel}
           className={toggleClassName}
+          disabled={disabled}
         >
           {icon}
           {buttonLabel}
@@ -60,6 +62,7 @@ vi.mock('shared-components/DropDownButton/DropDownButton', () => ({
               key={option.value}
               data-testid={option.value}
               role="option"
+              disabled={disabled}
               onClick={() => onSelect(option.value)}
             >
               {option.label}
@@ -294,6 +297,50 @@ describe('StandardHeaderDropdown', () => {
       );
       const container = screen.getByTestId('header-sort-container');
       expect(container.className).toContain('my-class');
+    });
+
+    it('forwards disabled prop to the toggle button', () => {
+      renderWithProviders(
+        <StandardHeaderDropdown {...defaultProps} disabled={true} />,
+      );
+      expect(screen.getByTestId('header-sort-toggle')).toBeDisabled();
+    });
+  });
+
+  // ── Disabled state ─────────────────────────────────────────
+
+  describe('Disabled state', () => {
+    it('toggle button is disabled when disabled prop is true', () => {
+      renderWithProviders(
+        <StandardHeaderDropdown {...defaultProps} disabled={true} />,
+      );
+      expect(screen.getByTestId('header-sort-toggle')).toBeDisabled();
+    });
+
+    it('does not call onSortChange when an option is clicked while disabled', async () => {
+      const onSortChange = vi.fn();
+      renderWithProviders(
+        <StandardHeaderDropdown
+          {...defaultProps}
+          onSortChange={onSortChange}
+          disabled={true}
+        />,
+      );
+      await user.click(screen.getByTestId('oldest'));
+      expect(onSortChange).not.toHaveBeenCalled();
+    });
+
+    it('ARIA: disabled toggle retains its aria-label and has disabled attribute', () => {
+      renderWithProviders(
+        <StandardHeaderDropdown
+          {...defaultProps}
+          disabled={true}
+          ariaLabel="Sort members list"
+        />,
+      );
+      const toggle = screen.getByTestId('header-sort-toggle');
+      expect(toggle).toBeDisabled();
+      expect(toggle).toHaveAttribute('aria-label', 'Sort members list');
     });
   });
 
