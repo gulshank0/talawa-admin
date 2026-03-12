@@ -24,16 +24,13 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
-
   background-color: var(--color-white);
   border: var(--border-1) solid var(--color-gray-200);
   border-radius: var(--radius-md);
-
   color: var(--color-gray-700);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-normal);
-
   cursor: pointer;
   white-space: nowrap;
   transition:
@@ -41,7 +38,6 @@
     border-color 150ms ease,
     box-shadow 150ms ease,
     color 150ms ease;
-
   vertical-align: middle;
 }
 

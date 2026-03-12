@@ -81,7 +81,7 @@ describe('StandardHeaderDropdown', () => {
   };
 
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   // ── Rendering ──────────────────────────────────────────────
