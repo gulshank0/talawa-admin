@@ -84,7 +84,7 @@ describe('StandardHeaderDropdown', () => {
     vi.restoreAllMocks();
   });
 
-  // ── Rendering ──────────────────────────────────────────────
+  // ── Rendering ────────────────────────────────────────────
 
   describe('Rendering', () => {
     it('renders the outer wrapper element', () => {
