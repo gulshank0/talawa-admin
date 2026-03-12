@@ -8,6 +8,10 @@ Defined in: [src/types/shared-components/SortingButton/interface.ts:14](https://
 
 Props for the SortingButton component.
 
+## Extended by
+
+- [`InterfaceStandardHeaderDropdownProps`](../../../../components/StandardHeader/interface/interfaces/InterfaceStandardHeaderDropdownProps.md)
+
 ## Properties
 
 ### ariaLabel?

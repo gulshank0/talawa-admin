@@ -1,0 +1,72 @@
+/**
+ * StandardHeaderDropdown.module.css
+ *
+ * Provides standardized dropdown button styling for screen headers.
+ * Uses design tokens so the component automatically adapts to theme changes.
+ */
+
+/* ── Wrapper ─────────────────────────────────────────────── */
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ── Dropdown container (passed as containerClassName) ───── */
+.dropdownContainer {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ── Toggle button (passed as toggleClassName) ────────────── */
+.toggleButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+
+  background-color: var(--color-white);
+  border: var(--border-1) solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+
+  color: var(--color-gray-700);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    color 150ms ease;
+
+  vertical-align: middle;
+}
+
+.toggleButton:hover {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-gray-300);
+  color: var(--color-gray-800);
+}
+
+.toggleButton:focus,
+.toggleButton:focus-visible {
+  outline: none;
+  border-color: var(--color-blue-300);
+  box-shadow: 0 0 0 var(--border-shadow-xs) var(--color-blue-shadow-focus);
+}
+
+.toggleButton:active {
+  background-color: var(--color-gray-100);
+  border-color: var(--color-gray-300);
+}
+
+/* Disabled state */
+.toggleButton:disabled,
+.toggleButton[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
