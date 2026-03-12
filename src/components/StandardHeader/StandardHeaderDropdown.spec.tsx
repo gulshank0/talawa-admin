@@ -1,9 +1,15 @@
 import React from 'react';
+import type { ReactElement } from 'react';
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { I18nextProvider } from 'react-i18next';
+import i18nForTest from 'utils/i18nForTest';
 import StandardHeaderDropdown from './StandardHeaderDropdown';
 import type { InterfaceSortingOption } from 'types/shared-components/SortingButton/interface';
+
+const renderWithProviders = (ui: ReactElement) =>
+  render(<I18nextProvider i18n={i18nForTest}>{ui}</I18nextProvider>);
 
 let user: ReturnType<typeof userEvent.setup>;
 
@@ -88,26 +94,26 @@ describe('StandardHeaderDropdown', () => {
 
   describe('Rendering', () => {
     it('renders the outer wrapper element', () => {
-      render(<StandardHeaderDropdown {...defaultProps} />);
+      renderWithProviders(<StandardHeaderDropdown {...defaultProps} />);
       expect(
         screen.getByTestId('standard-header-dropdown-wrapper'),
       ).toBeInTheDocument();
     });
 
     it('renders the SortingButton toggle inside the wrapper', () => {
-      render(<StandardHeaderDropdown {...defaultProps} />);
+      renderWithProviders(<StandardHeaderDropdown {...defaultProps} />);
       expect(screen.getByTestId('header-sort-toggle')).toBeInTheDocument();
     });
 
     it('displays the selected option as the button label by default', () => {
-      render(<StandardHeaderDropdown {...defaultProps} />);
+      renderWithProviders(<StandardHeaderDropdown {...defaultProps} />);
       expect(screen.getByTestId('header-sort-toggle')).toHaveTextContent(
         'latest',
       );
     });
 
     it('displays a custom buttonLabel when provided', () => {
-      render(
+      renderWithProviders(
         <StandardHeaderDropdown {...defaultProps} buttonLabel="Sort By" />,
       );
       expect(screen.getByTestId('header-sort-toggle')).toHaveTextContent(
@@ -116,14 +122,16 @@ describe('StandardHeaderDropdown', () => {
     });
 
     it('renders the sort icon by default', () => {
-      render(<StandardHeaderDropdown {...defaultProps} />);
+      renderWithProviders(<StandardHeaderDropdown {...defaultProps} />);
       const icon = screen.getByTestId('sorting-icon');
       expect(icon).toBeInTheDocument();
       expect(icon).toHaveAttribute('data-icon-type', 'sort');
     });
 
     it('renders the filter icon when type is "filter"', () => {
-      render(<StandardHeaderDropdown {...defaultProps} type="filter" />);
+      renderWithProviders(
+        <StandardHeaderDropdown {...defaultProps} type="filter" />,
+      );
       const icon = screen.getByTestId('sorting-icon');
       expect(icon).toHaveAttribute('data-icon-type', 'filter');
     });
@@ -133,13 +141,13 @@ describe('StandardHeaderDropdown', () => {
 
   describe('CSS class merging', () => {
     it('applies default wrapper class when no wrapperClassName is given', () => {
-      render(<StandardHeaderDropdown {...defaultProps} />);
+      renderWithProviders(<StandardHeaderDropdown {...defaultProps} />);
       const wrapper = screen.getByTestId('standard-header-dropdown-wrapper');
       expect(wrapper.className).not.toBe('');
     });
 
     it('appends wrapperClassName to wrapper when provided', () => {
-      render(
+      renderWithProviders(
         <StandardHeaderDropdown
           {...defaultProps}
           wrapperClassName="extra-wrapper"
@@ -150,7 +158,7 @@ describe('StandardHeaderDropdown', () => {
     });
 
     it('merges containerClassName from caller with standard styles', () => {
-      render(
+      renderWithProviders(
         <StandardHeaderDropdown
           {...defaultProps}
           containerClassName="custom-container"
@@ -161,7 +169,7 @@ describe('StandardHeaderDropdown', () => {
     });
 
     it('merges toggleClassName from caller with standard styles', () => {
-      render(
+      renderWithProviders(
         <StandardHeaderDropdown
           {...defaultProps}
           toggleClassName="custom-toggle"
@@ -172,14 +180,14 @@ describe('StandardHeaderDropdown', () => {
     });
 
     it('applies standard container class even without consumer override', () => {
-      render(<StandardHeaderDropdown {...defaultProps} />);
+      renderWithProviders(<StandardHeaderDropdown {...defaultProps} />);
       const container = screen.getByTestId('header-sort-container');
       // Should still have the standard class (CSS module hash)
       expect(container.className.length).toBeGreaterThan(0);
     });
 
     it('applies standard toggle class even without consumer override', () => {
-      render(<StandardHeaderDropdown {...defaultProps} />);
+      renderWithProviders(<StandardHeaderDropdown {...defaultProps} />);
       const toggle = screen.getByTestId('header-sort-toggle');
       expect(toggle.className.length).toBeGreaterThan(0);
     });
@@ -189,7 +197,7 @@ describe('StandardHeaderDropdown', () => {
 
   describe('Accessibility', () => {
     it('forwards ariaLabel to the toggle button', () => {
-      render(
+      renderWithProviders(
         <StandardHeaderDropdown
           {...defaultProps}
           ariaLabel="Sort members list"
@@ -202,7 +210,9 @@ describe('StandardHeaderDropdown', () => {
     });
 
     it('falls back to title for aria-label when ariaLabel is omitted', () => {
-      render(<StandardHeaderDropdown {...defaultProps} title="Sort Options" />);
+      renderWithProviders(
+        <StandardHeaderDropdown {...defaultProps} title="Sort Options" />,
+      );
       expect(screen.getByTestId('header-sort-toggle')).toHaveAttribute(
         'aria-label',
         'Sort Options',
@@ -210,7 +220,7 @@ describe('StandardHeaderDropdown', () => {
     });
 
     it('marks icons as aria-hidden', () => {
-      render(<StandardHeaderDropdown {...defaultProps} />);
+      renderWithProviders(<StandardHeaderDropdown {...defaultProps} />);
       expect(screen.getByTestId('sorting-icon')).toHaveAttribute(
         'aria-hidden',
         'true',
@@ -222,7 +232,7 @@ describe('StandardHeaderDropdown', () => {
 
   describe('Dropdown functionality', () => {
     it('renders all sorting options in the menu', () => {
-      render(<StandardHeaderDropdown {...defaultProps} />);
+      renderWithProviders(<StandardHeaderDropdown {...defaultProps} />);
       expect(screen.getByTestId('latest')).toBeInTheDocument();
       expect(screen.getByTestId('oldest')).toBeInTheDocument();
       expect(screen.getByTestId('1')).toBeInTheDocument();
@@ -231,7 +241,7 @@ describe('StandardHeaderDropdown', () => {
 
     it('calls onSortChange with the string value when an option is clicked', async () => {
       const onSortChange = vi.fn();
-      render(
+      renderWithProviders(
         <StandardHeaderDropdown
           {...defaultProps}
           onSortChange={onSortChange}
@@ -244,7 +254,7 @@ describe('StandardHeaderDropdown', () => {
 
     it('calls onSortChange with stringified number value for numeric options', async () => {
       const onSortChange = vi.fn();
-      render(
+      renderWithProviders(
         <StandardHeaderDropdown
           {...defaultProps}
           onSortChange={onSortChange}
@@ -259,7 +269,7 @@ describe('StandardHeaderDropdown', () => {
 
   describe('Prop forwarding', () => {
     it('forwards dropdownTestId to the inner dropdown', () => {
-      render(
+      renderWithProviders(
         <StandardHeaderDropdown
           {...defaultProps}
           dropdownTestId="my-dropdown"
@@ -270,7 +280,7 @@ describe('StandardHeaderDropdown', () => {
     });
 
     it('forwards a custom icon prop to SortingButton', () => {
-      render(
+      renderWithProviders(
         <StandardHeaderDropdown {...defaultProps} icon="/icons/custom.svg" />,
       );
       const img = screen.getByRole('img', { hidden: true });
@@ -279,7 +289,9 @@ describe('StandardHeaderDropdown', () => {
     });
 
     it('forwards className prop to SortingButton', () => {
-      render(<StandardHeaderDropdown {...defaultProps} className="my-class" />);
+      renderWithProviders(
+        <StandardHeaderDropdown {...defaultProps} className="my-class" />,
+      );
       const container = screen.getByTestId('header-sort-container');
       expect(container.className).toContain('my-class');
     });
@@ -289,26 +301,30 @@ describe('StandardHeaderDropdown', () => {
 
   describe('Edge cases', () => {
     it('renders with an empty sortingOptions array without crashing', () => {
-      render(<StandardHeaderDropdown {...defaultProps} sortingOptions={[]} />);
+      renderWithProviders(
+        <StandardHeaderDropdown {...defaultProps} sortingOptions={[]} />,
+      );
       expect(
         screen.getByTestId('standard-header-dropdown-wrapper'),
       ).toBeInTheDocument();
     });
 
     it('handles undefined selectedOption gracefully', () => {
-      render(
+      renderWithProviders(
         <StandardHeaderDropdown {...defaultProps} selectedOption={undefined} />,
       );
       expect(screen.getByTestId('header-sort-toggle')).toBeInTheDocument();
     });
 
     it('handles numeric selectedOption', () => {
-      render(<StandardHeaderDropdown {...defaultProps} selectedOption={1} />);
+      renderWithProviders(
+        <StandardHeaderDropdown {...defaultProps} selectedOption={1} />,
+      );
       expect(screen.getByTestId('header-sort-toggle')).toHaveTextContent('1');
     });
 
     it('handles selectedOption not matching any option value', () => {
-      render(
+      renderWithProviders(
         <StandardHeaderDropdown
           {...defaultProps}
           selectedOption="non-existent"
