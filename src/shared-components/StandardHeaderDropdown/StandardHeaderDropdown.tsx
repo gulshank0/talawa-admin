@@ -1,7 +1,7 @@
 import React from 'react';
 import SortingButton from 'shared-components/SortingButton/SortingButton';
 import styles from './StandardHeaderDropdown.module.css';
-import type { InterfaceStandardHeaderDropdownProps } from 'types/components/StandardHeader/interface';
+import type { InterfaceStandardHeaderDropdownProps } from 'types/shared-components/StandardHeaderDropdown/interface';
 
 /**
  * StandardHeaderDropdown

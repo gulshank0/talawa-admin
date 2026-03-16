@@ -11,7 +11,7 @@ const meta: Meta<typeof StandardHeaderDropdown> = {
         component:
           'A standardized wrapper around SortingButton that provides consistent ' +
           'dropdown styling (hover, focus, active states, spacing, and icon alignment) ' +
-          'across all screen headers. Part of the header standardization effort (issue 7290).',
+          'across all screen headers. Part of the header standardization effort (issue 7424).',
       },
     },
   },
@@ -185,6 +185,29 @@ export const CustomIconImage: Story = {
       description: {
         story:
           'Providing an `icon` prop replaces the MUI icon with a custom `<img>`.',
+      },
+    },
+  },
+};
+
+/**
+ * Disabled state where the toggle button cannot be interacted with.
+ */
+export const Disabled: Story = {
+  args: {
+    type: 'sort',
+    dataTestIdPrefix: 'story-disabled',
+    sortingOptions: SORT_OPTIONS,
+    selectedOption: 'latest',
+    buttonLabel: 'Sort',
+    ariaLabel: 'Sort items (disabled)',
+    disabled: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The dropdown is rendered in a disabled state. The toggle button cannot be clicked to open the menu.',
       },
     },
   },

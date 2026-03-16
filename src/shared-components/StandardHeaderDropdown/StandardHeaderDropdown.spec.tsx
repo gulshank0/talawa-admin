@@ -1,7 +1,7 @@
 import React from 'react';
 import type { ReactElement } from 'react';
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, cleanup, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { I18nextProvider } from 'react-i18next';
 import i18nForTest from 'utils/i18nForTest';
@@ -90,6 +90,7 @@ describe('StandardHeaderDropdown', () => {
   };
 
   afterEach(() => {
+    cleanup();
     vi.restoreAllMocks();
   });
 
@@ -251,8 +252,10 @@ describe('StandardHeaderDropdown', () => {
         />,
       );
       await user.click(screen.getByTestId('oldest'));
-      expect(onSortChange).toHaveBeenCalledOnce();
-      expect(onSortChange).toHaveBeenCalledWith('oldest');
+      await waitFor(() => {
+        expect(onSortChange).toHaveBeenCalledOnce();
+        expect(onSortChange).toHaveBeenCalledWith('oldest');
+      });
     });
 
     it('calls onSortChange with stringified number value for numeric options', async () => {
@@ -264,7 +267,9 @@ describe('StandardHeaderDropdown', () => {
         />,
       );
       await user.click(screen.getByTestId('1'));
-      expect(onSortChange).toHaveBeenCalledWith('1');
+      await waitFor(() => {
+        expect(onSortChange).toHaveBeenCalledWith('1');
+      });
     });
   });
 
@@ -327,7 +332,9 @@ describe('StandardHeaderDropdown', () => {
         />,
       );
       await user.click(screen.getByTestId('oldest'));
-      expect(onSortChange).not.toHaveBeenCalled();
+      await waitFor(() => {
+        expect(onSortChange).not.toHaveBeenCalled();
+      });
     });
 
     it('ARIA: disabled toggle retains its aria-label and has disabled attribute', () => {

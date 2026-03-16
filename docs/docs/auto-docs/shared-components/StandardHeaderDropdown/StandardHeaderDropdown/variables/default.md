@@ -4,13 +4,13 @@
 
 # Variable: default
 
-> `const` **default**: `React.FC`\<[`InterfaceStandardHeaderDropdownProps`](../../../../types/components/StandardHeader/interface/interfaces/InterfaceStandardHeaderDropdownProps.md)\>
+> `const` **default**: `React.FC`\<[`InterfaceStandardHeaderDropdownProps`](../../../../types/shared-components/StandardHeaderDropdown/interface/interfaces/InterfaceStandardHeaderDropdownProps.md)\>
 
-Defined in: [src/components/StandardHeader/StandardHeaderDropdown.tsx:47](https://github.com/PalisadoesFoundation/talawa-admin/blob/main/src/components/StandardHeader/StandardHeaderDropdown.tsx#L47)
+Defined in: [src/shared-components/StandardHeaderDropdown/StandardHeaderDropdown.tsx:47](https://github.com/PalisadoesFoundation/talawa-admin/blob/main/src/shared-components/StandardHeaderDropdown/StandardHeaderDropdown.tsx#L47)
 
 StandardHeaderDropdown
 
-A standardized wrapper around [SortingButton](../../../../shared-components/SortingButton/SortingButton/variables/default.md) that enforces consistent
+A standardized wrapper around [SortingButton](../../../SortingButton/SortingButton/variables/default.md) that enforces consistent
 dropdown button appearance (hover, focus, active states, spacing, icon
 alignment, and accessibility attributes) across all screen headers.
 

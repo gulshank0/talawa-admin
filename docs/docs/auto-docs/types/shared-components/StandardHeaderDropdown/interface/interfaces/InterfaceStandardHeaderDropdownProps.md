@@ -4,7 +4,7 @@
 
 # Interface: InterfaceStandardHeaderDropdownProps
 
-Defined in: [src/types/components/StandardHeader/interface.ts:9](https://github.com/PalisadoesFoundation/talawa-admin/blob/main/src/types/components/StandardHeader/interface.ts#L9)
+Defined in: [src/types/shared-components/StandardHeaderDropdown/interface.ts:9](https://github.com/PalisadoesFoundation/talawa-admin/blob/main/src/types/shared-components/StandardHeaderDropdown/interface.ts#L9)
 
 Props for the StandardHeaderDropdown component.
 
@@ -13,7 +13,7 @@ Extends every prop that SortingButton accepts and adds an optional
 
 ## Extends
 
-- [`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md)
+- [`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md)
 
 ## Properties
 
@@ -27,7 +27,7 @@ Accessible label for the dropdown button (screen readers)
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`ariaLabel`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#arialabel)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`ariaLabel`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#arialabel)
 
 ***
 
@@ -41,7 +41,7 @@ Optional prop for custom button label
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`buttonLabel`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#buttonlabel)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`buttonLabel`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#buttonlabel)
 
 ***
 
@@ -55,7 +55,7 @@ Custom class name for the Dropdown
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`className`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#classname)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`className`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#classname)
 
 ***
 
@@ -69,7 +69,7 @@ Optional extra class for the dropdown container (e.g. from parent CSS module)
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`containerClassName`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#containerclassname)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`containerClassName`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#containerclassname)
 
 ***
 
@@ -83,7 +83,7 @@ The prefix for data-testid attributes for testing
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`dataTestIdPrefix`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#datatestidprefix)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`dataTestIdPrefix`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#datatestidprefix)
 
 ***
 
@@ -97,7 +97,7 @@ Whether the dropdown button is disabled
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`disabled`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#disabled)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`disabled`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#disabled)
 
 ***
 
@@ -111,7 +111,7 @@ The data-testid attribute for the Dropdown
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`dropdownTestId`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#dropdowntestid)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`dropdownTestId`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#dropdowntestid)
 
 ***
 
@@ -125,7 +125,7 @@ Optional custom icon to display in the button
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`icon`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#icon)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`icon`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#icon)
 
 ***
 
@@ -149,7 +149,7 @@ Callback function to handle sorting option change
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`onSortChange`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#onsortchange)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`onSortChange`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#onsortchange)
 
 ***
 
@@ -163,13 +163,13 @@ The currently selected sorting option
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`selectedOption`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#selectedoption)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`selectedOption`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#selectedoption)
 
 ***
 
 ### sortingOptions
 
-> **sortingOptions**: [`InterfaceSortingOption`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingOption.md)[]
+> **sortingOptions**: [`InterfaceSortingOption`](../../../SortingButton/interface/interfaces/InterfaceSortingOption.md)[]
 
 Defined in: [src/types/shared-components/SortingButton/interface.ts:18](https://github.com/PalisadoesFoundation/talawa-admin/blob/main/src/types/shared-components/SortingButton/interface.ts#L18)
 
@@ -177,7 +177,7 @@ The list of sorting options to display in the Dropdown
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`sortingOptions`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#sortingoptions)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`sortingOptions`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#sortingoptions)
 
 ***
 
@@ -191,7 +191,7 @@ The title attribute for the Dropdown
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`title`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#title)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`title`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#title)
 
 ***
 
@@ -205,7 +205,7 @@ Optional extra class for the toggle button (e.g. from parent CSS module)
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`toggleClassName`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#toggleclassname)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`toggleClassName`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#toggleclassname)
 
 ***
 
@@ -219,7 +219,7 @@ Type to determine the icon to display: 'sort' or 'filter'
 
 #### Inherited from
 
-[`InterfaceSortingButtonProps`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`type`](../../../../shared-components/SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#type)
+[`InterfaceSortingButtonProps`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md).[`type`](../../../SortingButton/interface/interfaces/InterfaceSortingButtonProps.md#type)
 
 ***
 
@@ -227,7 +227,7 @@ Type to determine the icon to display: 'sort' or 'filter'
 
 > `optional` **wrapperClassName**: `string`
 
-Defined in: [src/types/components/StandardHeader/interface.ts:15](https://github.com/PalisadoesFoundation/talawa-admin/blob/main/src/types/components/StandardHeader/interface.ts#L15)
+Defined in: [src/types/shared-components/StandardHeaderDropdown/interface.ts:15](https://github.com/PalisadoesFoundation/talawa-admin/blob/main/src/types/shared-components/StandardHeaderDropdown/interface.ts#L15)
 
 Optional extra class name applied to the outermost wrapper element.
 Use this to add page-specific layout adjustments (e.g. margins)

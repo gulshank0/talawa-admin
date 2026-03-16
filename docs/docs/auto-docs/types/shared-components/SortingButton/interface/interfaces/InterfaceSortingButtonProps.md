@@ -10,7 +10,7 @@ Props for the SortingButton component.
 
 ## Extended by
 
-- [`InterfaceStandardHeaderDropdownProps`](../../../../components/StandardHeader/interface/interfaces/InterfaceStandardHeaderDropdownProps.md)
+- [`InterfaceStandardHeaderDropdownProps`](../../../StandardHeaderDropdown/interface/interfaces/InterfaceStandardHeaderDropdownProps.md)
 
 ## Properties
 
